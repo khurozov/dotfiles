@@ -1,6 +1,7 @@
 # My dotfiles and scripts for Archlinux + Hyprland
 
 **Font**: Iosevka Fixed
+
 **Color theme**: TokyoNight
 
 ## Configurations
