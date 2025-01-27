@@ -1,0 +1,13 @@
+[init]
+    defaultBranch = main
+[commit]
+    gpgsign = true
+[alias]
+    lg = log --pretty=format:\"%Cgreen%h%Creset - %Cblue%ad%Creset %s %C(dim white)- %an <%ae>%C(auto)%d\" --date=format:\"%Y-%m-%d %H:%M:%S\"
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    allowedSignersFile = ~/.config/git/allowedSSHSigners
+
+[include]
+    path = ~/.config/git/multiuser.config
