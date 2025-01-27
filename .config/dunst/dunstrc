@@ -1,0 +1,9 @@
+[global]
+    follow = keyboard
+    offset = 0x19
+    padding = 2
+    horizontal_padding = 5
+    font = Iosevka Fixed 12
+    format = "<b>%s</b>\n%b"
+    mouse_left_click = do_action, close_current
+    mouse_right_click = close_all

@@ -1,0 +1,100 @@
+{
+    "spacing": 4,
+    "margin": "4 4 0 4",
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "mpris",
+        "network",
+        "pulseaudio",
+        "memory",
+        "cpu",
+        "hyprland/language",
+        "clock", 
+        "tray"
+    ],
+
+    // modules
+    "hyprland/workspaces": {
+        "format": " {} ",
+        "persistent-workspaces": {
+            "HDMI-A-2": [1,2,3,4],
+            "DP-1": [5,6,7,8,9,10]
+        }
+    },
+    "hyprland/window": {
+        "separate-outputs": true,
+        "icon": true,
+        "rewrite": {
+            "(.*) — Mozilla Firefox( Private Browsing)?": "$1"
+        }
+    },
+
+    "privacy": {
+        "modules": [
+            {"type": "screenshare"},
+            {"type": "audio-in"},
+            {"type": "audio-out"}
+        ]
+    },
+    "mpris": {
+        "interval": 5,
+        "format": "{status_icon} {title} - {artist}",
+        "title-len": 10,
+        "artist-len": 15,
+        "tooltip-format": "{title} - {artist} [{position}/{length}]",
+        "status-icons": {
+            "playing": "",
+            "paused":  ""
+        }
+    },
+    "network": {
+        "interval": 1,
+        "tooltip": false,
+        "format": "{icon}",
+        "format-wifi": " {icon} {essid}",
+        "format-alt": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "format-icons": {
+            "wifi": "󰀂",
+            "linked": "󰛵",
+            "ethernet": "󰱓",
+            "disconnected": "󰅛"
+        }
+    },
+    "pulseaudio": {
+        "scroll-step": 5,
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "foot -T pulsemixer pulsemixer",
+        "format": "{icon} {volume}% {format_source}",
+        "format-muted": "󰖁  {format_source}",
+        "format-icons": ["󰕿", "󰖀", "󰕾"],
+        "format-source": "󰍬 {volume}%",
+        "format-source-muted": "󰍭 "
+    },
+    "memory": {
+        "format": " {used:0.2f}G/{total:0.2f}G",
+        "tooltip": false
+    },
+    "cpu": {
+        "format": "󰍛 {usage}%"
+    },
+
+    "hyprland/language": {
+        "format-en": "🇺🇸",
+        "format-ru": "🇷🇺",
+        "on-click": "hyprctl switchxkblayout \"$(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main) | .name')\" next > /dev/null"
+    },
+    "clock": {
+        "format": "{:%d %a %H:%M}",
+        "format-alt": "{:%Y %b %d %a %H:%M:%S}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "interval": 1,
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+}

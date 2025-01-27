@@ -1,0 +1,85 @@
+# Basic Settings
+
+set hidden true
+set info size:time
+set drawbox true
+set ratios 1:3:2
+set number true
+set relativenumber true
+set cursorpreviewfmt "\033[7;90m"
+
+set sixel true
+set previewer '~/.config/lf/previewer'
+
+set ignorecase true
+set findlen 0
+
+# Custom Functions
+cmd cp2 %{{
+    IFS=" "
+    file="$*"
+    cp -r "$f" "$file"
+    lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+cmd touch %{{
+    IFS=" "
+    file="$*"
+    touch -- "$file"
+    lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+cmd mkdir %{{
+    IFS=" "
+    file="$*"
+    mkdir -p -- "$file"
+    lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+cmd pushf %{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf -- "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :$1<space>$parsed"
+}}
+
+cmd syscopy %{{
+    if [ -f "$f" ]; then
+        cb cp "$f" >/dev/null && printf "copied ${f##*/}" || printf "something went wrong"
+    else
+        printf "only file can be copied"
+    fi
+}}
+
+cmd bulkrename ${{
+    tmpfile_old="$(mktemp)"
+    tmpfile_new="$(mktemp)"
+
+    # if any file is not selected, rename all files based on hidden status
+    [ -n "$fs" ] && fs="$(printf "$fs" | sed "s:$PWD/::")" || fs="$( [ "$lf_hidden" = true ] && ls -A || ls)"
+
+    echo "$fs" > "$tmpfile_old"
+    echo "$fs" > "$tmpfile_new"
+    $EDITOR "$tmpfile_new"
+
+    [ "$(wc -l < "$tmpfile_old")" -eq "$(wc -l < "$tmpfile_new")" ] || { rm -f "$tmpfile_old" "$tmpfile_new"; exit 1; }
+
+    paste "$tmpfile_old" "$tmpfile_new" | while IFS="$(printf '\t')" read -r src dst
+    do
+        [ "$src" = "$dst" ] || [ -e "$dst" ] || mv -- "$src" "$dst"
+    done
+
+    rm -f "$tmpfile_old" "$tmpfile_new"
+    lf -remote "send $id unselect"
+}}
+
+# Hot keys
+
+map . set hidden!
+map D delete
+map S calcdirsize
+map Y syscopy
+map R bulkrename
+map <f-5> pushf cp2
+map <f-6> push :touch<space>
+map <f-7> push :mkdir<space>
+map <c-f> filter

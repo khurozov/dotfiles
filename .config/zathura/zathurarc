@@ -1,0 +1,10 @@
+set page-padding 1
+
+set window-width 1920
+set window-height 1080
+
+set selection-clipboard clipboard
+
+set window-title-basename true
+
+set database sqlite

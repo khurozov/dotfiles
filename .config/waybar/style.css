@@ -1,0 +1,89 @@
+@define-color bg #1a1b26;
+@define-color bg-alt #606588;
+@define-color bg-alt2 #303244;
+@define-color bg-urgent #ed0b0b;
+@define-color fg #c0caf5;
+
+* {
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    font-family: Iosevka Fixed, monospace;
+}
+
+#waybar {
+    color: @fg;
+    background: transparent;
+}
+
+tooltip, tooltip * {
+    color: @fg;
+    background-color: @bg;
+}
+
+#workspaces button {
+    color: @fg;
+    background-color: @bg;
+    border-color: @bg-alt;
+    border-style: solid;
+    border-width: 0.5px 0;
+}
+
+#workspaces button:first-child {
+    border-radius: 10px 0 0 10px;
+    border-width: 0.5px 0 0.5px 0.5px;
+}
+
+#workspaces button:last-child {
+    border-radius: 0 10px 10px 0;
+    border-width: 0.5px 0.5px 0.5px 0;
+}
+
+#workspaces button.empty {
+    color: @bg-alt;
+}
+
+#workspaces button.visible {
+    color: @bg;
+    background-color: @bg-alt2;
+}
+
+#workspaces button.active {
+    color: @bg;
+    background-color: @bg-alt;
+}
+
+@keyframes urgent-blink {
+    to {
+        background-color: @bg-urgent;
+    }
+}
+
+#workspaces button.urgent {
+    animation: urgent-blink 0.5s linear infinite alternate;
+}
+
+#workspaces button:not(.visible):hover {
+    background-color: @bg-alt2;
+}
+
+window#waybar.empty #window {
+    border: none;
+    background-color: transparent;
+}
+
+#window,
+#mpris,
+#network,
+#pulseaudio,
+#memory,
+#cpu,
+#language,
+#clock,
+#tray
+{
+    background-color: @bg;
+    border-radius: 10px;
+    padding: 0 8px;
+    border: 0.5px solid @bg-alt;
+}

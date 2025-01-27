@@ -1,0 +1,3 @@
+#!/bin/sh
+
+slurp 2>/dev/null | grim -g - - 2>/dev/null | zbarimg --raw -q - 2>/dev/null | wl-copy -p

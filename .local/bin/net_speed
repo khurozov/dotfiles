@@ -1,0 +1,25 @@
+#!/bin/sh
+
+FILE=$HOME/.cache/net_speed_stat
+
+cur_time=$(date +%s)
+cur_rx=$(awk '{sum+=$1} END{print sum}' /sys/class/net/[we]*/statistics/rx_bytes)
+cur_tx=$(awk '{sum+=$1} END{print sum}' /sys/class/net/[we]*/statistics/tx_bytes)
+
+if [ -e "$FILE" ]; then
+  read old_time old_rx old_tx rs ts < "$FILE"
+
+  diff_time=$((cur_time - old_time))
+
+  if [ "$diff_time" -ne 0 ]; then
+    rs=$(((cur_rx - old_rx)/diff_time))
+    ts=$(((cur_tx - old_tx)/diff_time))
+  fi
+else
+  rs=0
+  ts=0
+fi
+
+echo "$cur_time $cur_rx $cur_tx $rs $ts" > "$FILE"
+
+printf "󰜮 %4s 󰜷 %4s " $(numfmt --to=iec-i --format="%.2fB" $rs $ts)

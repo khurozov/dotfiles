@@ -1,0 +1,34 @@
+#!/bin/sh
+
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: check if package is installed
+
+usage: $NAME PACKAGES
+  PACKAGES    space seperated list of packages to check
+"
+  printf "%s" "$INFO"
+}
+
+error() {
+  if [ "$TERM" = linux ]; then
+    notify-send -u critical "$1" "must be installed"
+  else
+    echo -e "\033[1;31m$1\033[0;31m must be installed\033[0m"
+  fi
+  exit 1
+}
+
+check_packs() {
+  for x in "$@"; do
+    if ! which "$x" >/dev/null 2>&1; then
+      error "$x"
+    fi
+  done
+}
+
+case "$1" in
+  --help)   help_opt;;
+  *)        check_packs "$@";;
+esac

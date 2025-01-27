@@ -1,0 +1,37 @@
+#!/bin/sh
+
+shot_name() {
+    printf "shot_$(date "+%y%m%d%H%M%S").png"
+}
+
+args() {
+    while 
+}
+
+o="$1"
+
+if [ -z "$o" ]; then
+    o="$(printf "copy\nsave\nupload\n" | fuzzel -d)" || exit 1
+fi
+
+case "$o" in
+    copy)   out="- | wl-copy -t image/png";;
+    save)   out="${SHOT_DIRECTORY:-$HOME}/$(shot_name)";;
+    upload) out="- | imgur -";;
+    *)      echo "Invalid 1st arg"; exit 1;;
+esac
+
+r="$2"
+
+if [ -z "$r" ]; then
+    r="$(printf "selected\nwindow\nfull\n" | fuzzel -d)" || exit 2
+fi
+
+case "$r" in
+    full)       geometry="";;
+    window)     select="hyprctl activewindow | sed -nE 's/.*at: ([0-9,]+)/\1/p; s/.*size: ([0-9]+),([0-9]+)/\1x\2/p;' | tr '\n' ' ' |";;
+    selected)   select="slurp -d |";;
+    *)          echo "Invalid 2nd arg"; exit 2;;
+esac
+
+eval "$select grim -g - $out"

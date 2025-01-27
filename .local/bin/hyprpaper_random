@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# loads random wallpaper from $XDG_PICTURES_DIR/wall
+# set HYPRPAPER_DIR to override it
+
+ifinstalled hyprpaper
+
+if [ -n "$HYPRPAPER_DIR" ]; then
+    dir="$HYPRPAPER_DIR"
+else
+    dir="$(xdg-user-dir PICTURES 2>/dev/null)/wall"
+    [ "$dir" = "/wall" ] && dir="$HOME/Pictures/wall"
+fi
+
+[ ! -d "$dir" ] && exit 1
+
+img="$(ls $dir/*.png | shuf -n1)"
+
+[ ! -f "$img" ] && exit 2
+
+hyprctl hyprpaper unload all
+hyprctl hyprpaper preload "$img"
+hyprctl hyprpaper wallpaper ",$img"

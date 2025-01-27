@@ -1,0 +1,13 @@
+#!/bin/sh
+
+while read file; do
+    case "$1" in
+        greater)    magick "$file" -rotate 90 "$file" ;;
+        question)   magick "$file" -rotate 180 "$file" ;;
+        less)       magick "$file" -rotate 270 "$file" ;;
+        bar)        magick "$file" -flop "$file" ;;
+        minus)      magick "$file" -flip "$file" ;;
+        Delete)     rm "$file" ;;
+        C-c)        printf "%s" "$file" | tr -d '\n' | wl-copy ;;
+    esac
+done

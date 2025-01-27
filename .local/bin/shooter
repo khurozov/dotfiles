@@ -1,0 +1,92 @@
+#!/bin/sh
+
+ifinstalled slurp grim hyprctl jq wl-copy imgur
+# defaults
+MODE=region
+COPY=0
+UPLOAD=0
+FILE=""
+STREAM=0
+
+parse_mode() {
+    case "$1" in
+        region|window|display|full)
+            MODE="$1"
+            ;;
+        *)
+            echo "Incorrect mode $1"
+            exit 1
+            ;;
+    esac
+}
+
+parse_output() {
+    case "$1" in
+        copy)   COPY=1;;
+        upload) UPLOAD=1;;
+        -)      STREAM=1;;
+        *)      FILE="$1";;
+    esac
+}
+
+grab_region() {
+    slurp -d
+}
+
+grab_window() {
+    local workspaces="$(hyprctl monitors -j | jq -r 'map(.activeWorkspace.id) | join(",")')"
+    local windows="$(hyprctl -j clients | jq -r '[.[] | select(.workspace.id | contains('$workspaces'))]')"
+    echo "$windows" | jq -r '.[] | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | slurp -r
+}
+
+grab_display() {
+    slurp -o
+}
+
+gg() {
+    if [ -z "$GEOMETRY" ]; then
+        grim "$@"
+    else
+        grim -g "$GEOMETRY" "$@"
+    fi
+}
+
+n=0;
+while getopts m:o: OPT; do
+    n=$((n + 2))
+    case $OPT in
+        m) parse_mode "$OPTARG";;
+        o) parse_output "$OPTARG";;
+    esac
+done
+
+shift $n
+if [ $# -ne 0 ]; then
+    if [ $# -eq 1 -a "$1" = "-" -a -z "$FILE" -a $COPY -eq 0 -a $UPLOAD -eq 0 ]; then
+        STREAM=1
+    else
+        echo "Invalid arguments $@"
+        exit 2
+    fi
+else
+    [ -z "$FILE" -a $UPLOAD -eq 0 -a $STREAM -eq 0 ] && COPY=1
+fi
+
+case $MODE in
+    region)     GEOMETRY="$(grab_region)";;
+    window)     GEOMETRY="$(grab_window)";;
+    display)    GEOMETRY="$(grab_display)";;
+    full)       GEOMETRY="";;
+esac
+
+[ -z "$GEOMETRY" -a "$MODE" != "full" ] && exit
+
+if [ $COPY -eq 1 ]; then
+    gg - | wl-copy -t image/png
+elif [ $UPLOAD -eq 1 ]; then 
+    gg - | imgur -
+elif [ $STREAM -eq 1 ]; then 
+    gg -
+else
+    gg -- $FILE
+fi

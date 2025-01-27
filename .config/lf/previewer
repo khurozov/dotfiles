@@ -1,0 +1,54 @@
+#!/bin/sh
+
+img() {
+    chafa "$1" -f sixel -s "$2"x"$3" --animate false
+}
+
+bb() {
+    bat --color=always --style=plain --theme ansi --pager=never "$@"
+}
+
+CACHE="/tmp/lf_thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$1")" | sha256sum | awk '{print $1}').png"
+
+case "$(file -bL --mime-type "$1")" in
+    application/x-bittorrent)
+        transmission-show -T -D "$1"
+        ;;
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet | application/vnd.ms-excel |  application/vnd.oasis.opendocument.spreadsheet)
+        ssconvert --export-type=Gnumeric_stf:stf_csv "$1" "fd://1" | bb --language=csv
+        ;;
+    application/msword)
+        catdoc "$1"
+        ;;
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document)
+        docx2txt "$1" -
+        ;;
+    application/vnd.oasis.opendocument.* | application/vnd.sun.xml.*)
+        odt2txt "$1" ;;
+    audio/*)
+        exiftool "$1"
+        ;;
+    */pdf)
+        [ ! -f "$CACHE" ] && pdftoppm -png -singlefile "$1" "${CACHE%.png}"
+        img "$CACHE" "$2" "$3"
+        ;;
+    video/*)
+        [ ! -f "$CACHE" ] && ffmpegthumbnailer -i "$1" -o "$CACHE" -s 0
+        img "$CACHE" "$2" "$3"
+        ;;
+    image/bmp)
+        [ ! -f "$CACHE" ] && magick "$1" "$CACHE"
+        img $CACHE "$2" "$3"
+        ;;
+    image/*)
+        img "$1" "$2" "$3"
+        ;;
+    *.svg)
+        [ ! -f "$CACHE" ] && magick "$1" "$CACHE"
+        img "$CACHE" "$2" "$3"
+        ;;
+    text/* | */xml | */json)
+        bb "$1"
+        ;;
+esac
+# exit 0

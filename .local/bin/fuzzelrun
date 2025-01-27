@@ -1,0 +1,27 @@
+#!/bin/sh
+
+ifinstalled fuzzel
+
+runlist() {
+    cachedir="${XDG_CACHE_HOME:-"$HOME/.cache"}"
+    cache="$cachedir/runlist"
+
+    [ ! -e "$cachedir" ] && mkdir -p "$cachedir"
+
+    IFS=:
+    if stest -dqr -n "$cache" $PATH; then
+        stest -flx $PATH | sort -u | tee "$cache"
+    else
+        cat "$cache"
+    fi
+}
+
+cmd="$(runlist | fuzzel -d)"
+
+if [ $? -eq 0 ]; then
+    if [ "$1" = "-t" ]; then
+        foot -T "$cmd" bash -c "$cmd; printf '\nPress any key to exit. '; read -n1"
+    else
+        eval "$cmd"
+    fi
+fi
