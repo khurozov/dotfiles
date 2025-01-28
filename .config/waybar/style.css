@@ -19,6 +19,8 @@
 tooltip, tooltip * {
     color: @fg;
     background-color: @bg;
+    padding: 2px;
+    border-radius: 8px;
 }
 
 #workspaces button {
