@@ -14,9 +14,8 @@ vim.opt.termguicolors = true
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 
--- don't show mode and cmd
+-- don't show mode
 vim.opt.showmode = false
-vim.opt.showcmd = false
 
 -- no backup and swap files
 vim.opt.backup = false
