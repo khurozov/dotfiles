@@ -24,13 +24,8 @@ delete_items() {
     delete_items # delete other elements until exited
 }
 
-wipe_all() {
-    w="$(printf "Yes\nNo" | fuzzel -d -p 'Wipe clipboard history? ')"
-    [ "$w" = "Yes" ] && cliphist wipe
-}
 
 case "$1" in
     copy)   copy_item;;
     delete) delete_items;;
-    wipe)   wipe_all;;
 esac
