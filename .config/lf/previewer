@@ -47,7 +47,10 @@ case "$(file -bL --mime-type "$1")" in
         [ ! -f "$CACHE" ] && magick "$1" "$CACHE"
         img "$CACHE" "$2" "$3"
         ;;
-    text/* | */xml | */json)
+    */json)
+        jq < "$1" | bb --language=json
+        ;;
+    text/* | */xml | application/x-subrip)
         bb "$1"
         ;;
 esac
