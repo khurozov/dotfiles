@@ -1,3 +1,5 @@
 #!/bin/sh
 
+ifinstalled slurp zbarimg wl-copy
+
 slurp 2>/dev/null | grim -g - - 2>/dev/null | zbarimg --raw -q - 2>/dev/null | wl-copy -p

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ifinstalled fuzzel wtype
+ifinstalled fuzzel wtype wl-paste
 
 file="$HOME/.local/share/bookmarks"
 

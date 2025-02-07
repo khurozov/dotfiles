@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ifinstalled cliphist wl-copy
+ifinstalled cliphist fuzzel wl-copy
 
 select_id() {
     cliphist list | fuzzel -d -R -w 80 -p "${1:-Select}" | cut -f1
