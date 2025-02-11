@@ -11,7 +11,7 @@ sudo pacman -S --noconfirm pipewire-{alsa,jack,pulse}
 systemctl --user enable pipewire{,-pulse} wireplumber
 
 # must have
-sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash-completion libnotify dunst wl-clipboard
+sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash-completion libnotify dunst wl-clipboard keepassxc bat
 paru -S --noconfirm hyprpolkitagent
 
 # needed (for scripts, etc.)
