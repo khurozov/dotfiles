@@ -1,5 +1,8 @@
 #/bin/sh
 
+# update pacman db
+sudo pacman -Sy
+
 # audio
 sudo pacman -S --noconfirm ttc-iosevka noto-fonts-{cjk,emoji,extra} ttf-dejavu ttf-nerd-fonts-symbols-mono
 
