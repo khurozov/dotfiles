@@ -11,15 +11,15 @@ sudo pacman -S --noconfirm pipewire-{alsa,jack,pulse}
 systemctl --user enable pipewire{,-pulse} wireplumber
 
 # must have
-sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash_completion libnotify dunst wl-clipboard
+sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash-completion libnotify dunst wl-clipboard
 paru -S --noconfirm hyprpolkitagent
 
 # needed (for scripts, etc.)
-sudo pacman -S --noconfirm firefox gtk4 breeze-gtk btop mpv yt-dlp fasfetch mand-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing lf gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar
+sudo pacman -S --noconfirm firefox gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing lf gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar
 
 # totally extra
-sudo pacman -S --noconfirm zathura-pdf-popple jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker
-paru -S --noconfirm sftpman bruno-bin intellij-idea-ultimate
+sudo pacman -S --noconfirm zathura-pdf-poppler jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker
+paru -S --noconfirm sftpman bruno-bin intellij-idea-ultimate-edition
 
 dir="$(dirname "$0")"
 
