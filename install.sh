@@ -23,20 +23,20 @@ paru -S --noconfirm sftpman bruno-bin intellij-idea-ultimate-edition
 
 dir="$(dirname "$0")"
 
-if [ -d "~/.config" ] || mkdir "~/.config"
+[ -d "$HOME/.config" ] || mkdir "$HOME/.config"
 for cc in $(ls "$dir/.config"); do
-    cp -riv "$dir/.config/$cc" "~/.config/cc"
+    cp -rivf "$dir/.config/$cc" "$HOME/.config/$cc"
 done
 
-if [ -d "~/.local/bin" ] || mkdir "~/.local/bin"
+[ -d "$HOME/.local/bin" ] || mkdir "$HOME/.local/bin"
 for bb in $(ls "$dir/.local/bin"); do
-    cp -iv "$dir/.local/bin/$bb" "~/.local/bin/bb"
+    cp -ivf "$dir/.local/bin/$bb" "$HOME/.local/bin/$bb"
 done
 
-if [ -d "~/.local/share" ] || mkdir "~/.local/share"
+[ -d "$HOME/.local/share" ] || mkdir "$HOME/.local/share"
 for ss in $(ls "$dir/.local/share"); do
-    cp -riv "$dir/.local/share/$ss" "~/.local/share/ss"
+    cp -rivf "$dir/.local/share/$ss" "$HOME/.local/share/$ss"
 done
 
-cp -iv "$dir/.bash_profile" "~/.bash_profile"
-cp -iv "$dir/.bashrc" "~/.bashrc"
+cp -ivf "$dir/.bash_profile" "$HOME/.bash_profile"
+cp -ivf "$dir/.bashrc" "$HOME/.bashrc"
