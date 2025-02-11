@@ -1,6 +1,11 @@
 #/bin/sh
 
-dir="$(dirname "$0")"
+# audio
+sudo pacman -S --noconfirm ttc-iosevka noto-fonts-{cjk,emoji,extra} ttf-dejavu ttf-nerd-fonts-symbols-mono
+
+# audio
+sudo pacman -S --noconfirm pipewire-{alsa,jack,pulse}
+systemctl --user enable pipewire{,-pulse} wireplumber
 
 # must have
 sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash_completion libnotify dunst wl-clipboard
@@ -12,6 +17,8 @@ sudo pacman -S --noconfirm firefox gtk4 breeze-gtk btop mpv yt-dlp fasfetch mand
 # totally extra
 sudo pacman -S --noconfirm zathura-pdf-popple jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker
 paru -S --noconfirm sftpman bruno-bin intellij-idea-ultimate
+
+dir="$(dirname "$0")"
 
 if [ -d "~/.config" ] || mkdir "~/.config"
 for cc in $(ls "$dir/.config"); do
