@@ -6,6 +6,7 @@ export PATH="$PATH$(find $HOME/.local/bin -type d -printf :%p)"
 # default apps
 export TERMINAL="foot"
 export EDITOR="nvim"
+export HOSTNAME="$(uname -n)"
 
 eval `ssh-agent -s`
 
