@@ -12,7 +12,7 @@ systemctl --user enable pipewire{,-pulse} wireplumber
 
 # must have
 sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash-completion libnotify dunst wl-clipboard keepassxc
-paru -S --noconfirm hyprpolkitagent
+paru -S --noconfirm hyprpolkitagent hyprshade
 
 # needed (for scripts, etc.)
 sudo pacman -S --noconfirm firefox gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing nsxiv lf chafa bat gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar pulsemixer
@@ -22,6 +22,7 @@ paru -S clipboard-bin
 sudo pacman -S --noconfirm zathura-pdf-poppler jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker
 paru -S --noconfirm sftpman bruno-bin intellij-idea-ultimate-edition
 
+# copy config files
 dir="$(dirname "$0")"
 
 [ -d "$HOME/.config" ] || mkdir "$HOME/.config"
@@ -41,3 +42,7 @@ done
 
 cp -ivf "$dir/.bash_profile" "$HOME/.bash_profile"
 cp -ivf "$dir/.bashrc" "$HOME/.bashrc"
+
+# enable hyprshade timer
+hyprshade install
+systemctl --user enable hyprshade.timer
