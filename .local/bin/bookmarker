@@ -34,7 +34,7 @@ select_bm() {
 confirm_bm() {
   read p < /dev/stdin
   [ -z "$p" ] && exit 1
-  ans="$(printf "Yes\nNo" | fuzzel -d -p "$1 $p?" -w 100)" || exit 2
+  ans="$(printf "Yes\nNo" | fuzzel -d -p "$1 $p? " -w 100)" || exit 2
   [ -z "${ans%%*Yes*}" ] && echo "$p"
 }
 
