@@ -1,6 +1,7 @@
 #!/bin/sh
 
 ifinstalled cliphist fuzzel wl-copy
+CLIPPER_TOGGLE_FILE=/tmp/clipper_disabled
 
 select_id() {
     cliphist list | fuzzel -d -R -w 80 -p "${1:-Select}" | cut -f1
@@ -24,8 +25,37 @@ delete_items() {
     delete_items # delete other elements until exited
 }
 
+listen() {
+    if pidof wl-paste > /dev/null; then
+        # already watching
+        exit 1
+    fi
+
+    rm "$CLIPPER_TOGGLE_FILE" 2> /dev/null
+
+    wl-paste -t text --watch clipper store > /dev/null &
+    wl-paste -t image --watch clipper store > /dev/null &
+}
+
+toggle() {
+    if [ -e "$CLIPPER_TOGGLE_FILE" ]; then
+        rm "$CLIPPER_TOGGLE_FILE"
+        hyprctl notify 5 3000 0 "Clipper enabled"
+    else
+        touch "$CLIPPER_TOGGLE_FILE"
+        hyprctl notify 3 3000 0 "Clipper disabled"
+    fi
+}
+
+store_if_enabled() {
+    [ -e "$CLIPPER_TOGGLE_FILE" ] || cliphist store 
+}
 
 case "$1" in
     copy)   copy_item;;
     delete) delete_items;;
+    toggle) toggle;;
+    store)  store_if_enabled;;
+    listen) listen;;
+    wipe)   cliphist wipe;;
 esac
