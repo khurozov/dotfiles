@@ -48,6 +48,10 @@ toggle() {
 }
 
 store_if_enabled() {
+    name="$(hyprctl activewindow -j | jq -r '.title + .class')"
+
+    [ -z "${name##*KeePassXC*}" ] && return 0
+
     [ -e "$CLIPPER_TOGGLE_FILE" ] || cliphist store 
 }
 
