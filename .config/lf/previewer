@@ -1,7 +1,7 @@
 #!/bin/sh
 
 img() {
-    chafa "$1" -f sixel -s "$2"x"$3" --animate false
+    chafa "$1" -s "$2"x"$3" --animate false
 }
 
 bb() {
@@ -36,16 +36,14 @@ case "$(file -bL --mime-type "$1")" in
         [ ! -f "$CACHE" ] && ffmpegthumbnailer -i "$1" -o "$CACHE" -s 0
         img "$CACHE" "$2" "$3"
         ;;
-    image/bmp)
-        [ ! -f "$CACHE" ] && magick "$1" "$CACHE"
+    image/bmp | image/tiff )
+        w=$2
+        rw=$((w * 7))
+        [ ! -f "$CACHE" ] && magick "$1" -resize $rw\> "$CACHE"
         img $CACHE "$2" "$3"
         ;;
     image/*)
         img "$1" "$2" "$3"
-        ;;
-    *.svg)
-        [ ! -f "$CACHE" ] && magick "$1" "$CACHE"
-        img "$CACHE" "$2" "$3"
         ;;
     */json)
         jq < "$1" | bb --language=json
