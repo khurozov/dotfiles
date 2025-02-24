@@ -18,6 +18,6 @@ img="$(ls $dir/*.png | shuf -n1)"
 
 [ ! -f "$img" ] && exit 2
 
-hyprctl hyprpaper unload all
-hyprctl hyprpaper preload "$img"
-hyprctl hyprpaper wallpaper ",$img"
+hyprctl -q -i 0 hyprpaper unload all
+hyprctl -q -i 0 hyprpaper preload "$img"
+hyprctl -q -i 0 hyprpaper wallpaper ",$img"
