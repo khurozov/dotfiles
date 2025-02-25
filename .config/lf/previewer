@@ -1,11 +1,16 @@
 #!/bin/sh
 
 img() {
-    chafa "$1" -s "$2"x"$3" --animate false
+    chafa "$1" -s "$(($2-3))x$3" --animate false
 }
 
 bb() {
     bat --color=always --style=plain --theme ansi --pager=never "$@"
+}
+
+exif() {
+    echo
+    exiftool "$@" -mimetype | sed -E 's/^ *//;s/                     //;' 
 }
 
 CACHE="/tmp/lf_thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$1")" | sha256sum | awk '{print $1}').png"
@@ -26,7 +31,8 @@ case "$(file -bL --mime-type "$1")" in
     application/vnd.oasis.opendocument.* | application/vnd.sun.xml.*)
         odt2txt "$1" ;;
     audio/*)
-        exiftool "$1"
+        exiftool -b -picture "$1" | img - "$2"
+        exif "$1" -title -artist -album -year -duration
         ;;
     */pdf)
         [ ! -f "$CACHE" ] && pdftoppm -png -singlefile "$1" "${CACHE%.png}"
@@ -34,16 +40,17 @@ case "$(file -bL --mime-type "$1")" in
         ;;
     video/*)
         [ ! -f "$CACHE" ] && ffmpegthumbnailer -i "$1" -o "$CACHE" -s 0
-        img "$CACHE" "$2" "$3"
+        img "$CACHE" "$2"
+        exif "$1" -duration -imagesize
         ;;
     image/bmp | image/tiff )
-        w=$2
-        rw=$((w * 7))
-        [ ! -f "$CACHE" ] && magick "$1" -resize $rw\> "$CACHE"
+        [ ! -f "$CACHE" ] && magick "$1" -resize $(($2 * 7))\> "$CACHE"
         img $CACHE "$2" "$3"
+        exif "$1" -imagesize
         ;;
     image/*)
         img "$1" "$2" "$3"
+        exif "$1" -imagesize
         ;;
     */json)
         jq < "$1" | bb --language=json
@@ -51,5 +58,8 @@ case "$(file -bL --mime-type "$1")" in
     text/* | */xml | application/x-subrip)
         bb "$1"
         ;;
+    *)
+        hexdump -C "$1"
+        ;;
 esac
-# exit 0
+exit 0
