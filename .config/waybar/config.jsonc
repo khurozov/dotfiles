@@ -12,6 +12,7 @@
         "memory",
         "cpu",
         "hyprland/language",
+        "battery",
         "clock", 
         "tray"
     ],
@@ -77,7 +78,14 @@
     "cpu": {
         "format": "󰍛 {usage}%"
     },
-
+    "battery": {
+        "interval": 1,
+        "format": "{icon} {capacity}%",
+        "format-icons": {
+            "discharging": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+            "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂄"]
+        }
+    },
     "hyprland/language": {
         "format-en": "🇺🇸",
         "format-ru": "🇷🇺",

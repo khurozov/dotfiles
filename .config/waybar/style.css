@@ -80,6 +80,7 @@ window#waybar.empty #window {
 #pulseaudio,
 #memory,
 #cpu,
+#battery,
 #language,
 #clock,
 #tray
