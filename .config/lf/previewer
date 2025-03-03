@@ -55,7 +55,7 @@ case "$(file -bL --mime-type "$1")" in
     */json)
         jq < "$1" | bb --language=json
         ;;
-    text/* | */xml | application/x-subrip)
+    text/* | */xml | application/x-subrip | application/x-pem-file)
         bb "$1"
         ;;
     *)
