@@ -33,6 +33,6 @@ alias df='df -h'
 alias free='free -mt'
 alias mirrors='sudo reflector -l 30 -f 20 --sort rate --save /etc/pacman.d/mirrorlist'
 alias orphans='sudo pacman -Rnsc $(pacman -Qtdq)'
-alias yt='yt-dlp --embed-subs -f "best[height<=1080][ext=mp4][acodec!=none]"'
+alias yt='yt-dlp --embed-subs --embed-metadata --embed-thumbnail -f "best[height<=1080][ext=mp4][acodec!=none]"'
 alias speedtest="curl -o /dev/null cachefly.cachefly.net/100mb.test"
 alias rsync='rsync -vrPlu'
