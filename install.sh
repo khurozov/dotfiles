@@ -15,8 +15,8 @@ sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland 
 paru -S --noconfirm hyprpolkitagent hyprshade
 
 # needed (for scripts, etc.)
-sudo pacman -S --noconfirm firefox gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing nsxiv lf chafa bat gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar pulsemixer
-paru -S clipboard-bin
+sudo pacman -S --noconfirm gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing nsxiv lf chafa bat gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar pulsemixer
+paru -S brave-bin clipboard-bin
 
 # totally extra
 sudo pacman -S --noconfirm zathura-pdf-poppler jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker cronie brightnessctl
