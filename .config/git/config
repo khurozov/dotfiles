@@ -1,13 +1,39 @@
 [init]
     defaultBranch = main
+
+[branch]
+    sort = -committerdate
+
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+
+[push]
+    autoSetupRemote = true
+
+[fetch]
+    prune = true
+    all = true
+
+[pull]
+    rebase = true
+
+[help]
+    autocorrect = prompt
+
+[format]
+    pretty = "%Cgreen%h%Creset - %Cblue%ad%Creset %s %C(dim white)- %an <%ae>%C(auto)%d"
+[log]
+    date=format:%Y-%m-%d %H:%M:%S
+
 [commit]
     gpgsign = true
-[alias]
-    lg = log --pretty=format:\"%Cgreen%h%Creset - %Cblue%ad%Creset %s %C(dim white)- %an <%ae>%C(auto)%d\" --date=format:\"%Y-%m-%d %H:%M:%S\"
 [gpg]
     format = ssh
 [gpg "ssh"]
     allowedSignersFile = ~/.config/git/allowedSSHSigners
 
 [include]
-    path = ~/.config/git/multiuser.config
+    path = multiuser.config
