@@ -12,7 +12,12 @@ copy_item() {
     
     [ -z "$id" ] && exit
 
-    cliphist decode "$id" | wl-copy
+    if cliphist decode "$id" | grep -q ^file:///; then
+        cliphist decode "$id" | wl-copy -t text/uri-list
+    else
+        cliphist decode "$id" | wl-copy
+    fi
+
 }
 
 delete_items() {
