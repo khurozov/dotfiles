@@ -42,11 +42,13 @@ cmd pushf %{{
     lf -remote "send $id push :$1<space>$parsed"
 }}
 
-cmd syscopy %{{
+cmd syscopy &{{
     if [ -f "$f" ]; then
-        cb cp "$f" >/dev/null && printf "copied ${f##*/}" || printf "something went wrong"
+        if wl-copy -t text/uri-list -- "file://$f"; then
+            lf -remote "send $id echo copied \"$(printf '%s' "${f##*/}" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+        fi
     else
-        printf "only file can be copied"
+        lf -remote "send $id echo only file can be copied"
     fi
 }}
 
