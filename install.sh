@@ -20,7 +20,7 @@ paru -S brave-bin
 
 # totally extra
 sudo pacman -S --noconfirm zathura-pdf-poppler jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker cronie brightnessctl
-paru -S --noconfirm sftpman bruno-bin intellij-idea-ultimate-edition
+paru -S --noconfirm bruno-bin intellij-idea-ultimate-edition
 
 # copy config files
 dir="$(dirname "$0")"
