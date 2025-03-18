@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ "$1" = "-t" -o "$1" = "--toggle" ]; then
+    hyprctl switchxkblayout "$(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main) | .name')" next > /dev/null
+fi
+
+hyprctl notify 2 1500 0 "$(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main) | .active_keymap')"

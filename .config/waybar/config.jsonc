@@ -11,7 +11,6 @@
         "pulseaudio",
         "memory",
         "cpu",
-        "hyprland/language",
         "battery",
         "clock", 
         "tray"
@@ -86,12 +85,6 @@
             "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂄"],
             "full": "󰂄"
         }
-    },
-    "hyprland/language": {
-        "format-en": "🇺🇸",
-        "format-ru": "🇷🇺",
-        "format-uz": "🇺🇿",
-        "on-click": "hyprctl switchxkblayout \"$(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main) | .name')\" next > /dev/null"
     },
     "clock": {
         "format": "{:%d %a %H:%M}",
