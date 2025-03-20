@@ -5,7 +5,7 @@ img() {
 }
 
 bb() {
-    bat --color=always --style=plain --theme ansi --pager=never "$@"
+    bat --color=always --theme ansi -pp "$@"
 }
 
 exif() {
@@ -55,11 +55,11 @@ case "$(file -bL --mime-type "$1")" in
     */json)
         jq < "$1" | bb --language=json
         ;;
-    text/* | */xml | application/x-subrip | application/x-pem-file)
-        bb "$1"
-        ;;
     *)
-        hexdump -C "$1"
+        case "$(file -bL --mime-encoding "$1")" in
+            binary) hexdump -C "$1" ;;
+            *)      bb "$1";;
+        esac
         ;;
 esac
 exit 0
