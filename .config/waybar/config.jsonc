@@ -31,7 +31,7 @@
         "separate-outputs": true,
         "icon": true,
         "rewrite": {
-            "(.*) — Mozilla Firefox( Private Browsing)?": "$1"
+            "(.*) — (Mozilla Firefox|LibreWolf|Brave)( Private Browsing)?": "$1"
         }
     },
 
