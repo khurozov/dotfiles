@@ -41,7 +41,7 @@ confirm_bm() {
 type_bm() {
   bookmark="$(select_bm)" || exit 3
 
-  wtype -d 10 "${bookmark%% *}" -k Return
+  wtype "${bookmark%% *}" -k Return
 }
 
 add_bm() {
