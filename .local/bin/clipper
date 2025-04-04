@@ -1,70 +1,37 @@
 #!/bin/sh
 
 ifinstalled cliphist fuzzel wl-copy
-CLIPPER_TOGGLE_FILE=/tmp/clipper_disabled
 
-select_id() {
-    cliphist list | fuzzel -d -R -w 80 -p "${1:-Select}" | cut -f1
+select_item() {
+    cliphist list | fuzzel -d -R -w 80 -p "${1:-Select}"
 }
 
 copy_item() {
-    id="$(select_id 'Copy: ')"
+    item="$(select_item 'Copy: ')"
     
-    [ -z "$id" ] && exit
+    [ -z "$item" ] && exit
 
-    if cliphist decode "$id" | grep -q ^file:///; then
-        cliphist decode "$id" | wl-copy -t text/uri-list
+    if echo "$item" | grep -Pq "^\d+\tfile:///"; then
+        cliphist decode "$item" | wl-copy -t text/uri-list
     else
-        cliphist decode "$id" | wl-copy
+        cliphist decode "$item" | wl-copy
     fi
 
 }
 
-delete_items() {
-    id="$(select_id 'Delete: ')"
+delete_item() {
+    item="$(select_item 'Delete: ')"
 
-    [ -z "$id" ] && exit
+    [ -z "$item" ] && exit
 
-    printf "%d" "$id" | cliphist delete
+    printf "%d" "$item" | cliphist delete
 
-    delete_items # delete other elements until exited
+    delete_item # delete other elements until exited
 }
 
-listen() {
-    if pidof wl-paste > /dev/null; then
-        # already watching
-        exit 1
-    fi
-
-    rm "$CLIPPER_TOGGLE_FILE" 2> /dev/null
-
-    wl-paste -t text --watch clipper store > /dev/null &
-    wl-paste -t image --watch clipper store > /dev/null &
-}
-
-toggle() {
-    if [ -e "$CLIPPER_TOGGLE_FILE" ]; then
-        rm "$CLIPPER_TOGGLE_FILE"
-        hyprctl notify 5 3000 0 "Clipper enabled"
-    else
-        touch "$CLIPPER_TOGGLE_FILE"
-        hyprctl notify 3 3000 0 "Clipper disabled"
-    fi
-}
-
-store_if_enabled() {
-    name="$(hyprctl activewindow -j | jq -r '.title + .class')"
-
-    [ -z "${name##*KeePassXC*}" ] && return 0
-
-    [ -e "$CLIPPER_TOGGLE_FILE" ] || cliphist store 
-}
 
 case "$1" in
     copy)   copy_item;;
-    delete) delete_items;;
-    toggle) toggle;;
-    store)  store_if_enabled;;
-    listen) listen;;
-    wipe)   cliphist wipe;;
+    delete) delete_item;;
+    select) select_item;;
 esac
