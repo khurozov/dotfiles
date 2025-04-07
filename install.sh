@@ -19,7 +19,7 @@ sudo pacman -S --noconfirm gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs
 paru -S librewolf-bin
 
 # totally extra
-sudo pacman -S --noconfirm zathura-pdf-poppler jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker cronie brightnessctl
+sudo pacman -S --noconfirm tesseract-data-eng zathura-pdf-mupdf jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker cronie brightnessctl
 paru -S --noconfirm bruno-bin intellij-idea-ultimate-edition
 
 # copy config files
