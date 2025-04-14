@@ -1,82 +1,27 @@
 #!/bin/sh
 
-ifinstalled fuzzel wtype wl-paste
+ifinstalled fuzzel wtype
 
 file="$HOME/.local/share/bookmarks"
 
-help_opt() {
-  NAME="${0##*/}"
-  INFO="
-$NAME: bookmark manager
-
-usage: $NAME COMMMAND
-
-COMMANDS:
-  type      type selected bookmark
-  add       add new bookmark form primary selection
-  edit      open bookmarks file ($file) using default editor
-  delete    delete selected bookmark
-"
-  printf "%s" "$INFO"
-}
-
-select_bm() {
-  list="$(grep -v '^#' "$file" 2>/dev/null)"
-  
-  if [ -z "$list" ]; then
-    notify-send "No bookmarks" "Check $file"
-    exit 1
-  else
-    grep -v -E '^#|^\s*$' "$file" | fuzzel -d -w 100
-  fi
-}
-
-confirm_bm() {
-  read p < /dev/stdin
-  [ -z "$p" ] && exit 1
-  ans="$(printf "Yes\nNo" | fuzzel -d -p "$1 $p? " -w 100)" || exit 2
-  [ -z "${ans%%*Yes*}" ] && echo "$p"
-}
-
 type_bm() {
-  bookmark="$(select_bm)" || exit 3
+    list="$(grep -v '^#' "$file" 2>/dev/null)" 
 
-  wtype "${bookmark%% *}" -k Return
-}
-
-add_bm() {
-  bookmark="$(wl-paste | confirm_bm Add)" || exit 4
-  note="$(fuzzel -d --prompt-only "note: " -w 100)"
-  
-  if grep -q "^$bookmark" "$file"; then
-    notify-send "Oops!" "Already bookmarked"
-  else
-    if [ -z "$note" ]; then
-      echo "$bookmark" >> "$file"
-    else
-      echo "$bookmark $note" >> "$file"
+    if [ -z "$list" ]; then
+        notify-send "No bookmarks" "Check $file"
+        exit 1
     fi
-    notify-send "Bookmarked!"
-  fi
-}
 
-delete_bm() {
-  bookmark="$(select_bm | confirm_bm Delete)" || exit 5
-  if grep -qF "$bookmark" "$file"; then
-    tmp="$(mktemp)"
-    grep -vF "$bookmark" "$file" > "$tmp"
-    cat "$tmp" > "$file"
-  fi
+    bookmark="$(grep -v -E '^#|^\s*$' "$file" | fuzzel -d -w 100)" || exit 2
+
+    wtype "${bookmark%% *}" -k Return
 }
 
 edit_bm() {
-  xdg-open "$file"
+    xdg-open "$file"
 }
 
 case "$1" in
-  type)   type_bm;;
-  add)    add_bm;;
-  edit)   edit_bm;;
-  delete) delete_bm;;
-  *)      help_opt;;
+    type)   type_bm;;
+    edit)   edit_bm;;
 esac
