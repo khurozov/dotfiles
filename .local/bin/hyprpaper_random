@@ -5,6 +5,11 @@
 
 ifinstalled hyprpaper
 
+if ! pidof -q hyprpaper; then
+    hyprpaper &>/dev/null &
+    disown
+fi
+
 if [ -n "$HYPRPAPER_DIR" ]; then
     dir="$HYPRPAPER_DIR"
 else
