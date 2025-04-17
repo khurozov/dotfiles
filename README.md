@@ -16,7 +16,6 @@
 - btop
 - lf (TUI file manager)
 - fastfetch
-- paru
 - zathura
 - mpv
 - nsxiv
@@ -27,8 +26,9 @@
 
 | script               | usage                                                                                          |
 |----------------------|------------------------------------------------------------------------------------------------|
-| bookmarker           | type/add/delete/manage bookmarks                                                               |
+| bookmarker           | manage bookmarks                                                                               |
 | clipper              | interective GUI interface for cliphist                                                         |
+| hypr_kb              | switch/notify keyboard layout in hyprland                                                      |
 | hypr_swallow_toggler | toggle swallowing in Hyprland                                                                  |
 | hyprpaper_random     | set random image to background using hyprpaper                                                 |
 | ifinstalled          | check if pacakge(s) is/are insatlled (used in scripts)                                         |
