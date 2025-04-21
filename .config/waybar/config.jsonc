@@ -64,10 +64,10 @@
         "max-volume": 200,
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-click-right": "foot -T pulsemixer pulsemixer",
-        "format": "{icon} {volume}% {format_source}",
-        "format-muted": "󰖁  {format_source}",
+        "format": "{format_source} {icon} {volume}%",
+        "format-muted": "{format_source} 󰖁",
         "format-icons": ["󰕿", "󰖀", "󰕾"],
-        "format-source": "󰍬 {volume}%",
+        "format-source": "󰍬 ",
         "format-source-muted": "󰍭 "
     },
     "memory": {
