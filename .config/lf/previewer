@@ -43,7 +43,7 @@ case "$(file -bL --mime-type "$1")" in
         img "$CACHE" "$2"
         exif "$1" -duration -imagesize
         ;;
-    image/bmp | image/tiff | image/x-xcf )
+    image/bmp | image/tiff | image/x-xcf | image/*icon )
         [ ! -f "$CACHE" ] && magick "$1" -resize $(($2 * 7))\> "$CACHE"
         img $CACHE "$2" "$3"
         exif "$1" -imagesize
