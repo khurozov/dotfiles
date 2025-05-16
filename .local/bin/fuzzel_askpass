@@ -1,0 +1,3 @@
+#!/bin/sh
+
+fuzzel --password --prompt-only="$1" -d -w 60
