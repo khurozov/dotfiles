@@ -1,28 +1,25 @@
 #!/bin/sh
 
+set -eo pipefail
+
 ifinstalled cliphist fuzzel wl-copy
 
 select_item() {
-    cliphist list | fuzzel -d -R -w 80 -p "${1:-Select}"
+    cliphist list | fuzzel -Rdw 80 -p "${1:-Select}"
 }
 
 copy_item() {
     item="$(select_item 'Copy: ')"
     
-    [ -z "$item" ] && exit
-
     if echo "$item" | grep -Pq "^\d+\tfile:///"; then
         cliphist decode "$item" | wl-copy -t text/uri-list
     else
         cliphist decode "$item" | wl-copy
     fi
-
 }
 
 delete_item() {
     item="$(select_item 'Delete: ')"
-
-    [ -z "$item" ] && exit
 
     printf "%d" "$item" | cliphist delete
 

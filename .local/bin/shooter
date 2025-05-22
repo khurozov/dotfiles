@@ -1,6 +1,9 @@
 #!/bin/sh
 
+set -eo pipefail
+
 ifinstalled slurp grim hyprctl jq wl-copy imgur
+
 # defaults
 MODE=region
 COPY=0
@@ -79,7 +82,7 @@ case $MODE in
     full)       GEOMETRY="";;
 esac
 
-[ -z "$GEOMETRY" -a "$MODE" != "full" ] && exit
+[ -z "$GEOMETRY" -a "$MODE" != "full" ] && exit 1
 
 if [ $COPY -eq 1 ]; then
     gg - | wl-copy -t image/png

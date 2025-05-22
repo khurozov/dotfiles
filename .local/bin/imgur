@@ -1,9 +1,11 @@
 #!/bin/bash
 
+set -eo pipefail
+
 default_client_id=2e66167fec8c9fb
 client_id="${IMGUR_CLIENT_ID:-$default_client_id}"
 
-ifinstalled curl wl-copy || exit 1
+ifinstalled curl wl-copy
 
 help_opt() {
     NAME="${0##*/}"
@@ -36,7 +38,7 @@ ntfy() {
 }
 
 send() {
-    curl -s  -H "Authorization: Client-ID $client_id" -F "image=$1" https://api.imgur.com/3/image.xml 2>/dev/null
+    curl -s  -H "Authorization: Client-ID $client_id" -F "image=$1" https://api.imgur.com/3/image.xml
 }
 
 upload() {

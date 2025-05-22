@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -eo pipefail
+
 ifinstalled shooter zbarimg wl-copy
 
 shooter - | zbarimg --raw -q - | tr -d '\n' | wl-copy
