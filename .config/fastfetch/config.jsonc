@@ -4,10 +4,12 @@
         "separator": "->   "
     },
     "logo" : {
+      "source": "~/.config/fastfetch/arch.sixel",
+      "type": "raw",
       "padding": {
         "top": 1,
         "left": 5,
-        "right": 6
+        "right": 42
       }
     },
     "modules": [
@@ -72,11 +74,5 @@
             "type": "custom",
             "format": "└──────────────────────────────────────────────┘"
         },
-        "break",
-        "break",
-        "break",
-        "break",
-        "break",
-        "break"
     ]
 }
