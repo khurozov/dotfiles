@@ -42,13 +42,23 @@ cmd pushf %{{
     lf -remote "send $id push :$1<space>$parsed"
 }}
 
-cmd syscopy &{{
-    if [ -f "$f" ]; then
-        if wl-copy -t text/uri-list -- "file://$f"; then
-            lf -remote "send $id echo copied \"$(printf '%s' "${f##*/}" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+cmd syscopy ${{
+    list=()
+
+    for x in $fx; do
+        if [ -f "$x" ]; then
+            list+=("$x")
         fi
-    else
-        lf -remote "send $id echo only file can be copied"
+    done
+
+    if [ ${#list[@]} -gt 0 ]; then
+        wl-copy -t text/uri-list -- "$(printf "file://%s\n" "${list[@]}")"
+        
+        if [ ${#list[@]} -eq 1 ]; then
+            lf -remote "send $id echo copied \"$(printf '%s' "${x##*/}" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+        else
+            lf -remote "send $id echo copied ${#list[@]} files"
+        fi
     fi
 }}
 
