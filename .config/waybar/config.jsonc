@@ -8,6 +8,7 @@
     "modules-right": [
         "mpris",
         "network",
+        "custom/openconnect",
         "pulseaudio",
         "memory",
         "cpu",
@@ -58,6 +59,13 @@
             "disabled": "󰅛",
             "disconnected": "󰛵"
         }
+    },
+    "custom/openconnect" : {
+        "format": "󰒄",
+        "tooltip-format": "{}",
+        "exec": "ps -C openconnect --no-headers -o cmd |  sed 's/.* //;1q'",
+        "interval": 1,
+        "on-click": "sudo -A pkill openconnect"
     },
     "pulseaudio": {
         "scroll-step": 5,

@@ -82,6 +82,7 @@ window#waybar.empty #window {
 #window,
 #mpris,
 #network,
+#custom-openconnect,
 #pulseaudio,
 #memory,
 #cpu,
