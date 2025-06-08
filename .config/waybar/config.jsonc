@@ -49,9 +49,8 @@
     },
     "network": {
         "interval": 1,
-        "tooltip": false,
         "format": "{icon}",
-        "format-wifi": " {icon} {essid}",
+        "tooltip-format-wifi": "{icon} {essid}",
         "format-alt": " {bandwidthDownBytes}  {bandwidthUpBytes}",
         "format-icons": {
             "wifi": "󰀂",
