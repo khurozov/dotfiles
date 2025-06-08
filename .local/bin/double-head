@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -x 
+
+hyprctl reload
+
+main="$(hyprctl monitors -j | jq -r '.[].name | select(. | contains("DP"))')"
+hdmi="$(hyprctl monitors -j | jq -r '.[].name | select(. | contains("HDMI"))')"
+
+if [ -n "$hdmi" ]; then
+    hyprctl keyword monitor $hdmi, 1920x1080@60, 0x0, 1
+    hyprctl keyword monitor $main, 1920x1080@60, 1920x0, 1
+else
+    hdmi="$main"
+fi
+
+for i in {1..4}; do
+    hyprctl keyword workspace $i, monitor:$hdmi
+done
+
+for i in {5..10}; do
+    hyprctl keyword workspace $i, monitor:$main
+done
+
+hyprctl dispatch workspace 5
+hyprctl dispatch workspace 1
