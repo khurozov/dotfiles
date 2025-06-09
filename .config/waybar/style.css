@@ -39,12 +39,7 @@ tooltip, tooltip * {
     border-width: 0.5px 0.5px 0.5px 0;
 }
 
-#workspaces button.empty {
-    color: @bg-alt;
-}
-
 #workspaces button.visible {
-    color: @bg;
     background-color: @bg-alt2;
 }
 
