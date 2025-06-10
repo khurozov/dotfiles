@@ -1,8 +1,8 @@
 #!/bin/sh
 
-set -x 
-
-hyprctl reload
+if [ "$1" != "-n" ]; then
+    hyprctl reload
+fi
 
 main="$(hyprctl monitors -j | jq -r '.[].name | select(. | contains("DP"))')"
 hdmi="$(hyprctl monitors -j | jq -r '.[].name | select(. | contains("HDMI"))')"
