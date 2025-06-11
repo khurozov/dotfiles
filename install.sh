@@ -19,11 +19,11 @@ sudo pacman -S --noconfirm pipewire-{alsa,jack,pulse}
 systemctl --user enable pipewire{,-pulse} wireplumber
 
 # must have
-sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash-completion libnotify dunst wl-clipboard keepassxc
+sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash-completion libnotify dunst wl-clipboard openssh keepassxc
 paru -S --noconfirm hyprpolkitagent hyprshade
 
 # needed (for scripts, etc.)
-sudo pacman -S --noconfirm gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing nsxiv chafa bat gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar pulsemixer
+sudo pacman -S --noconfirm gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing nsxiv chafa bat gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar pulsemixer wev
 paru -S lf-git librewolf-bin
 
 # totally extra
