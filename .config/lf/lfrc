@@ -8,7 +8,7 @@ set number true
 set relativenumber true
 set cursorpreviewfmt "\033[7;90m"
 
-#set sixel true
+set sixel true
 set previewer '~/.config/lf/previewer'
 
 set ignorecase true
