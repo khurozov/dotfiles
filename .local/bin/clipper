@@ -19,7 +19,7 @@ copy_item() {
 }
 
 delete_item() {
-    item="$(select_item 'Delete: ')"
+    item="$(select_item 'Delete: ' | cut -f1)"
 
     printf "%d" "$item" | cliphist delete
 
