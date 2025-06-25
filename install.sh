@@ -54,3 +54,9 @@ cp -ivf "$dir/.bashrc" "$HOME/.bashrc"
 # enable hyprshade timer
 hyprshade install
 systemctl --user enable hyprshade.timer
+
+# autologin, see https://wiki.archlinux.org/title/Getty#Virtual_console
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/
+ echo "[Service]
+ExecStart=
+ExecStart=-/sbin/agetty -o '-p -f -- \\\\u' --noclear --autologin $USER %I \$TERM" > /etc/systemd/system/getty@tty1.service.d/autologin.conf
