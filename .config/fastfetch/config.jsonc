@@ -16,11 +16,6 @@
         "break",
         "break",
         {
-            "type": "title",
-            "format": "                       {6}{7}{8}"
-        },
-        "break",
-        {
             "type": "custom",
             "format": "┌───────────── System Information ─────────────┐"
         },
@@ -73,6 +68,6 @@
         {
             "type": "custom",
             "format": "└──────────────────────────────────────────────┘"
-        },
+        }
     ]
 }
