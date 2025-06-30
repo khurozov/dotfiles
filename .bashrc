@@ -10,7 +10,7 @@ else
   PS1="\[\033[1;36m\]\w > \[\033[0m\]" #cyan
 fi
 
-lff() {
+lf() {
   tmp="$(mktemp)"
   # `command` is needed in case `lfcd` is aliased to `lf`
   command lf -last-dir-path="$tmp" "$@"
@@ -36,5 +36,3 @@ alias orphans='sudo pacman -Rnsc $(pacman -Qtdq)'
 alias yt='yt-dlp --embed-subs --embed-metadata --embed-thumbnail -f "best[height<=1080][ext=mp4][acodec!=none]"'
 alias speedtest="curl -o /dev/null cachefly.cachefly.net/100mb.test"
 alias rsync='rsync -vrPlu'
-
-fastfetch
