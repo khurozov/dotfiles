@@ -84,8 +84,8 @@
         }
     },
     "clock": {
-        "format": "{:%d %a %H:%M}",
-        "format-alt": "{:%Y %b %d %a %H:%M:%S}",
+        "format": "{:%d - %H:%M}",
+        "format-alt": "{:%b %d %a - %H:%M:%S}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "interval": 1,
         "actions": {
