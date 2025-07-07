@@ -45,20 +45,24 @@ cmd pushf %{{
 cmd syscopy ${{
     list=()
 
-    for x in $fx; do
+    while read -r x; do
         if [ -f "$x" ]; then
             list+=("$x")
         fi
-    done
+    done <<< "$fx"
+
+    echo "${list[@]}"
 
     if [ ${#list[@]} -gt 0 ]; then
         wl-copy -t text/uri-list -- "$(printf "file://%s\n" "${list[@]}")"
         
         if [ ${#list[@]} -eq 1 ]; then
-            lf -remote "send $id echo copied \"$(printf '%s' "${x##*/}" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+            lf -remote "send $id echo copied \"$(printf '%s' "${list[0]##*/}" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
         else
             lf -remote "send $id echo copied ${#list[@]} files"
         fi
+    else
+        lf -remote "send $id echo no valid file to copy"
     fi
 }}
 
