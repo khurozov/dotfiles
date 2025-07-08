@@ -37,9 +37,3 @@
 
 [include]
 	path = multiuser.config
-[alias]
-	st = status
-	lg = log -16
-	df = diff
-	ddf = -c diff.external=difft diff
-	cm = commit
