@@ -19,15 +19,15 @@ sudo pacman -S --noconfirm pipewire-{alsa,jack,pulse}
 systemctl --user enable pipewire{,-pulse} wireplumber
 
 # must have
-sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper foot fuzzel waybar bash-completion libnotify dunst wl-clipboard openssh keepassxc
-paru -S --noconfirm hyprpolkitagent hyprshade
+sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt{5,6}-wayland xdg-user-dirs hyprlock hyprpaper hyprsunset foot fuzzel waybar bash-completion libnotify dunst wl-clipboard openssh keepassxc
+paru -S --noconfirm hyprpolkitagent
 
 # needed (for scripts, etc.)
 sudo pacman -S --noconfirm gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing nsxiv lf chafa bat gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar pulsemixer wev difftastic swappy
 paru -S --noconfirm librewolf-bin
 
 # totally extra
-sudo pacman -S --noconfirm tesseract-data-{eng,rus} zathura-pdf-mupdf jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker cronie brightnessctl
+sudo pacman -S --noconfirm tesseract-data-{eng,rus} zathura-pdf-mupdf jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker cronie
 paru -S --noconfirm bruno-bin intellij-idea-ultimate-edition
 
 # copy config files
@@ -50,10 +50,6 @@ done
 
 cp -ivf "$dir/.bash_profile" "$HOME/.bash_profile"
 cp -ivf "$dir/.bashrc" "$HOME/.bashrc"
-
-# enable hyprshade timer
-hyprshade install
-systemctl --user enable hyprshade.timer
 
 # autologin, see https://wiki.archlinux.org/title/Getty#Virtual_console
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/

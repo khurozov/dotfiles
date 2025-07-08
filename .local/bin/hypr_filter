@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -eo pipefail
+
+temp="$(hyprctl hyprsunset temperature)"
+
+if [ "$temp" -eq 6000 ]; then
+    hyprctl hyprsunset temperature 2000 > /dev/null
+else
+    hyprctl hyprsunset temperature 6000 > /dev/null
+    hyprctl hyprsunset identity > /dev/null
+fi
