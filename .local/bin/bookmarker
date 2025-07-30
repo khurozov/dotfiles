@@ -17,7 +17,24 @@ edit_bm() {
     xdg-open "$file"
 }
 
+open_tagged_bm() {
+    tags="$(sed -nr 's|.*tag://([\w-]+)|\1|p' "$file" | tr '-' '\n' | sort | uniq)"
+
+    test -n "$tags"
+
+    if [ "$(echo "$tags" | wc -l)" -eq 1 ]; then
+        tag="$tags"
+    else
+        tag="$(echo "$tags" | fuzzel -d -p "tag: ")"
+    fi
+
+    for t in $(sed -nr "s|([^ ]+) .*tag://.*$tag.*|\1|p" "$file"); do
+        xdg-open "$t"
+    done
+}
+
 case "$1" in
     type)   type_bm;;
     edit)   edit_bm;;
+    tags)   open_tagged_bm;;
 esac
