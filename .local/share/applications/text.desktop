@@ -2,3 +2,4 @@
 Type=Application
 Name=Text editor
 Exec=foot nvim %F
+MimeType=application/x-shellscript;text/x-shellscript;text/plain;inode/x-empty;text/x-java;text/x-c;text/x-c++;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-makefile;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-subrip;application/json;

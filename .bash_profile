@@ -3,8 +3,6 @@
 # add '~/.local/bin' an subfolder to path
 export PATH="$PATH$(find $HOME/.local/bin -type d -printf :%p)"
 
-# default apps
-export TERMINAL="foot"
 export EDITOR="nvim"
 export HOSTNAME="$(uname -n)"
 

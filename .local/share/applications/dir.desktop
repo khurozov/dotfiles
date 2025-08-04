@@ -2,3 +2,4 @@
 Type=Application
 Name=File Manager
 Exec=foot lf %u
+MimeType=inode/directory;

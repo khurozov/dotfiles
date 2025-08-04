@@ -2,3 +2,4 @@
 Type=Application
 Name=Torrent
 Exec=torrent_add %U
+MimeType=x-scheme-handler/magnet;application/x-bittorrent;
