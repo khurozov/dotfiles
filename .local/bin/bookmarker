@@ -2,19 +2,19 @@
 
 set -eo pipefail
 
-ifinstalled fuzzel wtype
+ifinstalled fuzzel
 
 file="$HOME/.local/share/bookmarks"
 test -f "$file"
 
-type_bm() {
+open_bm() {
     bookmark="$(grep -v -E '^#|^\s*$' "$file" | fuzzel -Rdw 100)"
 
-    wtype "${bookmark%% *}" -k Return
+    $BROWSER "${bookmark%% *}"
 }
 
 edit_bm() {
-    xdg-open "$file"
+    $TERMINAL $EDITOR "$file"
 }
 
 open_tagged_bm() {
@@ -29,12 +29,12 @@ open_tagged_bm() {
     fi
 
     for t in $(sed -nr "s|([^ ]+) .*tag://.*$tag.*|\1|p" "$file"); do
-        xdg-open "$t"
+        $BROWSER "$t" &
     done
 }
 
 case "$1" in
-    type)   type_bm;;
+    open)   open_bm;;
     edit)   edit_bm;;
     tags)   open_tagged_bm;;
 esac
