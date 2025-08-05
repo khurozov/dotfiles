@@ -18,7 +18,7 @@ vim.keymap.set({"n", "i"}, "<C-s>", "<cmd>w<cr>")
 vim.keymap.set("n", "<F8>", ":e ++enc=cp1251<CR>")
 
 -- insert datetime
-vim.keymap.set({"n", "i"}, "<C-d>",  function()
+vim.keymap.set({"n", "i"}, "<C-S-D>",  function()
     local date = os.date("%Y-%m-%d %H:%M")
     local current_pos = vim.api.nvim_win_get_cursor(0)
     local line = vim.api.nvim_get_current_line()
