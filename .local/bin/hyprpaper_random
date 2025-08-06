@@ -25,3 +25,4 @@ fi
 img="$(find "$dir" -iname "*.png" | grep -- "$1" | shuf -n1)"
 
 hyprctl -q -i 0 hyprpaper reload ",$img"
+ln -fs "$img" /tmp/wall.current
