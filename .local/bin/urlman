@@ -1,0 +1,63 @@
+#!/bin/sh
+
+set -eo pipefail
+
+ifinstalled fuzzel
+
+file="$HOME/.local/share/urls"
+test -f "$file"
+
+select_url() {
+    grep -v -E '^#|^\s*$' "$file" | fuzzel -Rdw 100 -p "$1"
+}
+open_url() {
+    url="$(select_url "open: ")"
+
+    $BROWSER "${url%% *}"
+}
+
+private_url() {
+    url="$(select_url "private: ")"
+
+    $BROWSER --incognito --private-window "${url%% *}"
+}
+
+tagged_urls() {
+    tags="$(sed -nr 's|.*tag://([\w-]+)|\1|p' "$file" | tr '-' '\n' | sort | uniq)"
+
+    test -n "$tags"
+
+    if [ "$(echo "$tags" | wc -l)" -eq 1 ]; then
+        tag="$tags"
+    else
+        tag="$(echo "$tags" | fuzzel -d -p "tag: ")"
+    fi
+
+    for t in $(sed -nr "s|([^ ]+) .*tag://.*$tag.*|\1|p" "$file"); do
+        $BROWSER "$t" &
+    done
+}
+
+edit_urls() {
+    $TERMINAL $EDITOR "$file"
+}
+
+help_cmd() {
+    echo "urlman - URL Manager
+
+Usage: urlman <command>
+
+command:
+    open        open url
+    private     open url in private window
+    tags        open tagged urls. tagged url format: url .* tag://tag1[-tag2[-tag3...]]
+    edit        edit url file"
+}
+
+case "$1" in
+    open)       open_url;;
+    private)    private_url;;
+    tags)       tagged_urls;;
+    edit)       edit_urls;;
+    *)          help_cmd;;
+esac
