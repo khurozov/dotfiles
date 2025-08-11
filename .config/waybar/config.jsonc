@@ -28,14 +28,15 @@
 
     "mpris": {
         "interval": 5,
-        "format": "{status_icon} {title} - {artist}",
+        "format": "{status_icon} {dynamic}",
         "title-len": 10,
         "artist-len": 15,
-        "tooltip-format": "{title} - {artist} [{position}/{length}]",
+        "tooltip-format": "{dynamic} [{position}/{length}]",
         "status-icons": {
             "playing": "",
             "paused":  ""
-        }
+        },
+        "dynamic-order": ["title", "artist"]
     },
     "network": {
         "interval": 1,
