@@ -2,5 +2,5 @@
 Type=Application
 Name=Private web
 Comment=Open urls in private mode
-Exec=librewolf --private-window %u
+Exec=brave --incognito %u
 MimeType=x-scheme-handler/http;x-scheme-handler/https;

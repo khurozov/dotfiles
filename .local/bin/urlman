@@ -19,7 +19,7 @@ open_url() {
 private_url() {
     url="$(select_url "private: ")"
 
-    $BROWSER --incognito --private-window "${url%% *}"
+    $BROWSER --incognito "${url%% *}"
 }
 
 tagged_urls() {

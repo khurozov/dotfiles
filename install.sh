@@ -24,7 +24,7 @@ paru -S --noconfirm hyprpolkitagent
 
 # needed (for scripts, etc.)
 sudo pacman -S --noconfirm gtk4 breeze-gtk btop mpv yt-dlp fastfetch man-db ntfs-3g cliphist wtype slurp grim jq libqalculate syncthing nsxiv lf chafa bat gnumeric perl-image-exiftool ffmpegthumbnailer docx2txt catdoc odt2txt transmission-cli zbar pulsemixer wev swappy
-paru -S --noconfirm librewolf-bin
+paru -S --noconfirm brave-bin
 
 # totally extra
 sudo pacman -S --noconfirm tesseract-data-{eng,rus} zathura-pdf-mupdf jdk{,8}-openjdk libreoffice-fresh telegram-desktop tailscale docker cronie

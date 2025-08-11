@@ -22,7 +22,7 @@
         "separate-outputs": true,
         "icon": true,
         "rewrite": {
-            "(.*) — (Mozilla Firefox|LibreWolf|Brave)( Private Browsing)?": "$1"
+            "(.*) - Brave": "$1"
         }
     },
 
