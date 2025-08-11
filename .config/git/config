@@ -37,3 +37,6 @@
 
 [include]
 	path = multiuser.config
+
+[alias]
+	tlog = log --after='yesterday'
