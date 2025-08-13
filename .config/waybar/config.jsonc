@@ -1,6 +1,4 @@
 {
-    "spacing": 4,
-    "margin": "4 4 0 4",
     "modules-left": [
         "hyprland/workspaces",
         "hyprland/window"

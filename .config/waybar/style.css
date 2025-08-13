@@ -1,8 +1,9 @@
-@define-color bg #1a1b26;
-@define-color bg-alt #606588;
-@define-color bg-alt2 #303244;
-@define-color bg-urgent #ed0b0b;
-@define-color fg #c0caf5;
+@define-color dark rgba(26, 27, 38, 0.9);
+@define-color urgent rgb(255, 92, 87);
+@define-color light rgb(192, 202, 245);
+@define-color light-80 rgba(192, 202, 245, 0.8);
+@define-color light-50 rgba(192, 202, 245, 0.5);
+@define-color light-20 rgba(192, 202, 245, 0.2);
 
 * {
     border: none;
@@ -12,45 +13,33 @@
 }
 
 #waybar {
-    color: @fg;
-    background: transparent;
+    color: @light;
+    background: @dark;
 }
 
 tooltip, tooltip * {
-    color: @fg;
-    background-color: @bg;
+    color: @light;
+    background-color: @dark;
     padding: 2px;
 }
 
 #workspaces button {
-    color: @fg;
-    background-color: @bg;
-    border-color: @bg-alt;
-    border-style: solid;
-    border-width: 0.5px 0;
-    padding: 4 12px;
-}
-
-#workspaces button:first-child {
-    border-width: 0.5px 0 0.5px 0.5px;
-}
-
-#workspaces button:last-child {
-    border-width: 0.5px 0.5px 0.5px 0;
+    color: @light;
+    padding: 4px 12px;
 }
 
 #workspaces button.visible {
-    background-color: @bg-alt2;
+    background-color: @light-20;
 }
 
 #workspaces button.active {
-    color: @bg;
-    background-color: @bg-alt;
+    color: @light;
+    background-color: @light-50;
 }
 
 @keyframes urgent-blink {
     to {
-        background-color: @bg-urgent;
+        background-color: @urgent;
     }
 }
 
@@ -59,20 +48,7 @@ tooltip, tooltip * {
 }
 
 #workspaces button:not(.visible):hover {
-    background-color: @bg-alt2;
-}
-
-window#waybar.empty #window {
-    border: none;
-    background-color: transparent;
-}
-
-.modules-left {
-    margin-left: 2px;
-}
-
-.modules-right {
-    margin-right: 2px;
+    background-color: @light-20;
 }
 
 #window,
@@ -86,7 +62,6 @@ window#waybar.empty #window {
 #clock,
 #tray
 {
-    background-color: @bg;
     padding: 0 8px;
-    border: 0.5px solid @bg-alt;
+    border-left: 1px solid @light-50;
 }
