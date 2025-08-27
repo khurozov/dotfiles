@@ -2,14 +2,37 @@
 
 set -eo pipefail
 
-ifinstalled slurp grim hyprctl jq wl-copy imgur
+ifinstalled slurp grim hyprctl jq wl-copy imgbb
+
+if [ "$1" = "--help" ]; then
+    echo -e "shooter: take screenshot and copy/save/upload
+
+usage: shooter [-m MODE] [(-o OUTPUT | -)]
+
+MODE => selection mode
+    region      select region freely \e[3m(default)\e[0m
+    window      select a window
+    display     select a monitor
+    full        fullscreen screenshot
+
+OUTPUT => what to do with screenshot?
+    copy        copy to clipboard \e[3m(default)\e[0m
+    upload      upload to ImgBB \e[3m(uses imgbb script)\e[0m
+    pipe        pipe raw image data to stdout
+    <path>      save to a file with given path
+
+- => shorthand for '-o pipe'
+    "
+
+exit 0
+fi
 
 # defaults
 MODE=region
 COPY=0
 UPLOAD=0
 FILE=""
-STREAM=0
+PIPE=0
 
 parse_mode() {
     case "$1" in
@@ -27,7 +50,7 @@ parse_output() {
     case "$1" in
         copy)   COPY=1;;
         upload) UPLOAD=1;;
-        -)      STREAM=1;;
+        pipe)   PIPE=1;;
         *)      FILE="$1";;
     esac
 }
@@ -66,13 +89,13 @@ done
 shift $n
 if [ $# -ne 0 ]; then
     if [ $# -eq 1 -a "$1" = "-" -a -z "$FILE" -a $COPY -eq 0 -a $UPLOAD -eq 0 ]; then
-        STREAM=1
+        PIPE=1
     else
         echo "Invalid arguments $@"
         exit 2
     fi
 else
-    [ -z "$FILE" -a $UPLOAD -eq 0 -a $STREAM -eq 0 ] && COPY=1
+    [ -z "$FILE" -a $UPLOAD -eq 0 -a $PIPE -eq 0 ] && COPY=1
 fi
 
 case $MODE in
@@ -87,8 +110,8 @@ esac
 if [ $COPY -eq 1 ]; then
     gg - | wl-copy -t image/png
 elif [ $UPLOAD -eq 1 ]; then 
-    gg - | imgur -
-elif [ $STREAM -eq 1 ]; then 
+    gg - | imgbb -
+elif [ $PIPE -eq 1 ]; then 
     gg -
 else
     gg -- $FILE
