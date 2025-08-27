@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -eo pipefail
+
+api_key="$IMGBB_API_KEY"
+
+ifinstalled curl jq wl-copy
+
+if [ "$1" = "--help" ]; then
+    echo "imgbb: upload image to ImgBB and copy the url
+
+usage: imgbb (-|path|url)
+  -       read image from stdin
+  path    path to an image
+  url     url of image"
+
+exit 0
+fi
+
+ntfy() {
+    if [ "$TERM" = linux ]; then
+        notify-send "$1" "$2"
+    else
+        echo "$1 $2"
+    fi
+}
+
+send() {
+    curl -s -F "key=$api_key" -F "image=$1" -F "name=$(date '+%y%m%d%H%M%S')" https://api.imgbb.com/1/upload
+}
+
+upload() {
+    if [ -z "${1%%http*}" ]; then
+        # url
+        json="$(send "$1")"
+    else
+        # file
+        if [ "$1" != "-" -a ! -f "$1" ]; then
+        ntfy "$1" "file doesn't exist"
+        exit 2
+        fi
+        json="$(send "@$1")"
+    fi
+}
+
+upload_n_copy() {
+    ntfy "started uploading to imgur"
+    if ! upload "$1"; then
+        ntfy "$1" "upload failed"
+        exit 3
+    fi
+    
+    if [ "$(jq -r '.success' <<< $json)" != "true" ]; then
+        ntfy "$1" "$(jq -r '.status_txt + ": " + .error.message' <<< $json)"
+        exit 4
+    fi
+
+   url="$(jq -r '.data.url' <<< $json)"
+
+    wl-copy "$url" && ntfy "$1" "uploaded & url copied"
+}
+
+upload_n_copy "$@"
