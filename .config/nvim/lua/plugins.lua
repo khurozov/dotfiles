@@ -30,10 +30,7 @@ require("lazy").setup({
     {
         'vimwiki/vimwiki',
         init = function()
-            vim.g.vimwiki_list = {
-                {name = 'private', path = '~/.local/share/notes/private', auto_diary_index = 1, syntax = 'markdown', ext = '.md'},
-                {name = 'work', path = '~/.local/share/notes/work', auto_diary_index = 1}
-            }
+            vim.g.vimwiki_list = {{path = '~/.local/share/notes', auto_diary_index = 1, syntax = 'markdown', ext = '.md'}}
         end
     },
 })
