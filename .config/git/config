@@ -24,7 +24,7 @@
 	autocorrect = prompt
 
 [format]
-	pretty = "%Cgreen%h%Creset - %Cblue%ad%Creset %s %C(dim white)- %an <%ae>%C(auto)%d"
+	pretty = "%Cgreen%h%Creset - %Cblue%ad%Creset %s %C(dim white)%an <%ae>%C(auto)%d"
 [log]
 	date=format:%Y-%m-%d %H:%M:%S
 
@@ -40,3 +40,4 @@
 
 [alias]
 	tlog = log --after='yesterday'
+	xlog = log -16
