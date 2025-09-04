@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # loads random wallpaper from $XDG_PICTURES_DIR/wall
 # set HYPRPAPER_DIR to override it

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if [ "$(hyprctl getoption misc:enable_swallow | grep -Po "(?<=int: ).*")" = 0 ]; then
     hyprctl keyword misc:enable_swallow true

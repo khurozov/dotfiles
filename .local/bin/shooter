@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -eo pipefail
 
 ifinstalled slurp grim hyprctl jq wl-copy imgbb
 
-if [ "$1" = "--help" ]; then
+help_opt() {
     echo -e "shooter: take screenshot and copy/save/upload
 
 usage: shooter [-m MODE] [(-o OUTPUT | -)]
@@ -23,8 +23,11 @@ OUTPUT => what to do with screenshot?
 
 - => shorthand for '-o pipe'
     "
+}
 
-exit 0
+if [ "$1" = "--help" ]; then
+    help_opt
+    exit 0
 fi
 
 # defaults
@@ -41,6 +44,7 @@ parse_mode() {
             ;;
         *)
             echo "Incorrect mode $1"
+            help_opt
             exit 1
             ;;
     esac
@@ -60,8 +64,9 @@ grab_region() {
 }
 
 grab_window() {
-    local workspaces="$(hyprctl monitors -j | jq -r 'map(.activeWorkspace.id) | join(",")')"
-    local windows="$(hyprctl -j clients | jq -r '[.[] | select(.workspace.id | contains('$workspaces'))]')"
+    local workspaces windows
+    workspaces="$(hyprctl monitors -j | jq -r 'map(.activeWorkspace.id) | join(",")')"
+    windows="$(hyprctl -j clients | jq -r '[.[] | select(.workspace.id | contains('"$workspaces"'))]')"
     echo "$windows" | jq -r '.[] | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | slurp -r
 }
 
@@ -81,21 +86,31 @@ n=0;
 while getopts m:o: OPT; do
     n=$((n + 2))
     case $OPT in
-        m) parse_mode "$OPTARG";;
-        o) parse_output "$OPTARG";;
+        m)
+            parse_mode "$OPTARG"
+            ;;
+        o)
+            parse_output "$OPTARG"
+            ;;
+        *)
+            echo "Invalid arguments $*"
+            help_opt
+            exit 2
+            ;;
     esac
 done
 
 shift $n
 if [ $# -ne 0 ]; then
-    if [ $# -eq 1 -a "$1" = "-" -a -z "$FILE" -a $COPY -eq 0 -a $UPLOAD -eq 0 ]; then
+    if [ $# -eq 1 ] && [ "$1" = "-" ] && [ -z "$FILE" ] && [ $COPY -eq 0 ] && [ $UPLOAD -eq 0 ]; then
         PIPE=1
     else
-        echo "Invalid arguments $@"
+        echo "Invalid arguments $*"
+        help_opt
         exit 2
     fi
 else
-    [ -z "$FILE" -a $UPLOAD -eq 0 -a $PIPE -eq 0 ] && COPY=1
+    [ -z "$FILE" ] && [ $UPLOAD -eq 0 ] && [ $PIPE -eq 0 ] && COPY=1
 fi
 
 case $MODE in
@@ -105,7 +120,7 @@ case $MODE in
     full)       GEOMETRY="";;
 esac
 
-[ -z "$GEOMETRY" -a "$MODE" != "full" ] && exit 1
+[ -z "$GEOMETRY" ] && [ "$MODE" != "full" ] && exit 1
 
 if [ $COPY -eq 1 ]; then
     gg - | wl-copy -t image/png
@@ -114,5 +129,5 @@ elif [ $UPLOAD -eq 1 ]; then
 elif [ $PIPE -eq 1 ]; then 
     gg -
 else
-    gg -- $FILE
+    gg -- "$FILE"
 fi

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -eo pipefail
 
@@ -35,7 +35,7 @@ upload() {
         json="$(send "$1")"
     else
         # file
-        if [ "$1" != "-" -a ! -f "$1" ]; then
+        if [ "$1" != "-" ] && [ ! -f "$1" ]; then
         ntfy "$1" "file doesn't exist"
         exit 2
         fi
@@ -50,12 +50,12 @@ upload_n_copy() {
         exit 3
     fi
     
-    if [ "$(jq -r '.success' <<< $json)" != "true" ]; then
-        ntfy "$1" "$(jq -r '.status_txt + ": " + .error.message' <<< $json)"
+    if [ "$(jq -r '.success' <<< "$json")" != "true" ]; then
+        ntfy "$1" "$(jq -r '.status_txt + ": " + .error.message' <<< "$json")"
         exit 4
     fi
 
-   url="$(jq -r '.data.url' <<< $json)"
+   url="$(jq -r '.data.url' <<< "$json")"
 
     wl-copy "$url" && ntfy "$1" "uploaded & url copied"
 }

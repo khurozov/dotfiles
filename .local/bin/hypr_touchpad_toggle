@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -exo pipefail
+set -eo pipefail
 
 tp="$(hyprctl devices -j | jq -r '.mice[].name | select(contains("touchpad"))')"
 
@@ -9,7 +9,7 @@ tp="$(hyprctl devices -j | jq -r '.mice[].name | select(contains("touchpad"))')"
 
 f="$XDG_RUNTIME_DIR/touchpad.status"
 
-if [ ! -f "$f" -o "$(cat "$f")" = "false" ]; then
+if [ ! -f "$f" ] || [ "$(cat "$f")" = "false" ]; then
      hyprctl keyword "device[$tp]:enabled" true
      echo true > "$f"
  else

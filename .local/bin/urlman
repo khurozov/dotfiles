@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -23,7 +23,7 @@ private_url() {
 }
 
 edit_urls() {
-    $TERMINAL $EDITOR "$file"
+    xdg-open "$file"
 }
 
 help_cmd() {
