@@ -1,7 +1,7 @@
 #!/bin/sh
 
 img() {
-    chafa "$1" -s "$2x$3" --animate false
+    chafa "$1" --view-size "$(($2-4))x$(($3-4))" --animate false
 }
 
 bb() {
@@ -9,7 +9,6 @@ bb() {
 }
 
 exif() {
-    echo
     exiftool "$@" -mimetype | sed -E 's/^ *//;s/                     //;' 
 }
 
